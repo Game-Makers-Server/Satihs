@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dan8c4cgjraun"]
+[gd_scene load_steps=4 format=3 uid="uid://dan8c4cgjraun"]
 
 [ext_resource type="Texture2D" uid="uid://ecq1odqkjmxl" path="res://icon.svg" id="1_mfbxr"]
 
@@ -27,6 +27,10 @@ func _on_settings_pressed():
 	$main_menu.visible = false
 	$settings_menu.visible = true
 
+func _on_return_pressed():
+	$main_menu.visible = true
+	$settings_menu.visible = false
+
 func _on_quit_pressed():
 	get_tree().quit()
 "
@@ -52,24 +56,6 @@ func _on_rendering_pressed():
 func _on_custom_character_pressed():
 	DialogeManager.start_dialogue(Vector2(display_size.x/2,display_size.y), 
 	[\"Oops, feature not yet implemented\"])
-
-func _on_return_pressed():
-	$main_menu.visible = true
-	$settings_menu.visible = false
-"
-
-[sub_resource type="GDScript" id="GDScript_ai088"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 "
 
 [node name="main_menu" type="Node2D"]
@@ -126,7 +112,6 @@ offset_bottom = 40.0
 [node name="audio" type="Button" parent="settings_menu/VBoxContainer"]
 layout_mode = 2
 text = "Audio"
-script = SubResource("GDScript_ai088")
 
 [node name="controls" type="Button" parent="settings_menu/VBoxContainer"]
 layout_mode = 2
@@ -153,4 +138,5 @@ text = "Return"
 [connection signal="pressed" from="settings_menu/VBoxContainer/controls" to="settings_menu" method="_on_controls_pressed"]
 [connection signal="pressed" from="settings_menu/VBoxContainer/rendering" to="settings_menu" method="_on_rendering_pressed"]
 [connection signal="pressed" from="settings_menu/VBoxContainer/custom_character" to="settings_menu" method="_on_custom_character_pressed"]
+[connection signal="pressed" from="settings_menu/VBoxContainer/return" to="." method="_on_return_pressed"]
 [connection signal="pressed" from="settings_menu/VBoxContainer/return" to="settings_menu" method="_on_return_pressed"]
